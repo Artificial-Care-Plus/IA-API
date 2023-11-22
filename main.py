@@ -2,16 +2,19 @@ import pickle
 
 import pandas as pd
 from flask import Flask, jsonify, request
+from flask_cors import CORS, cross_origin
 from sklearn.linear_model import LinearRegression
 
 # cspell:ignore jsonify
 app = Flask(__name__)
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 calorie_model = pickle.load(open('calorias.pkl', 'rb'))
 steps_model = pickle.load(open('passos.pkl', 'rb'))
 
 
 @app.route('/calorias', methods=['GET'])
+@cross_origin()
 def calories():
     workout_type = request.args.get('workout_type')
     time = request.args.get('time')
@@ -26,6 +29,7 @@ def calories():
 
 
 @app.route('/passos', methods=['GET'])
+@cross_origin()
 def steps():
     workout_type = request.args.get('workout_type')
     time = request.args.get('time')

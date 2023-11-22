@@ -2,3 +2,4 @@ pandas
 pickle
 sklearn
 flask
+flask_cors
